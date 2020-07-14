@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Update Todo?</h5>
+        <hr>
+        <p class="card-text">Are you sure you want to update '{{ todo }}' ?</p>
+        <div class="form-inline">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.todo.label }}
+                {{ form.todo }}<br><br>
+                
+                {{ form.completed.label}}
+                {{ form.completed}}<br><br>
+
+                <div class="form-inline">
+                    <a href="{% url 'home' %}" class="btn btn-md btn-info mr-3">No, I dont wanna</a>
+                    <input type="submit" value="Update" class="btn btn-md btn-warning">
+                </div>
+        </form>
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}

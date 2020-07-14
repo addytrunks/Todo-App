@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-warning alert-dismissable" role="alert">
+        <button class="close" data-dismiss="alert">
+            <small><a href="{% url 'home' %}">x</a></small>
+        </button>
+        {{ message }}
+    </div>
+    {% endfor %}
+{% endif %}
+<div class="row">
+    <div class="col md-9">
+        <ul class="list-group mb-4" >
+            <h3>Todo List:</h3><hr>
+        
+            <form  method="POST">
+                {% csrf_token %}
+                {{ form.todo }}<br>
+                <input type="submit" class="btn btn-outline-primary btn-block" value="Submit">
+            </form>
+            {% for todo in todos %}
+            <li class="list-group-item mb-2">
+                {% if todo.completed == True %}
+                    <strike>{{ todo.todo }}</strike>(Completed)
+                    <h6 class="text-muted">{{ todo.created_at }} </h6>
+                {% else %}
+                    {{ todo.todo }}
+                    <h6 class="text-muted">{{ todo.created_at }} </h6>
+                {% endif %}
+                <a href="{% url 'update' todo.id %}" class="btn btn-sm btn-outline-warning" style="float: right;">Update  </a>  
+                <a href="{% url 'delete' todo.id %}" class="btn btn-sm btn-outline-danger float-right mr-2">Delete</a>
+        
+            </li>
+            {% endfor %}
+        </ul>
+        
+    </div>
+    
+    <div class="col md-3" style="margin-top: 175px; ">
+        <div class="card card-body border-primary" style="width: 18rem; float: right;">
+            <h5 class="card-title">Todo Data</h5>
+            <hr>
+            <h6>Total Todos:{{ todo_count }}</h6>
+            <h6>Completed:{{ completed }}</h6>
+            <h6>Not Completed:{{ not_completed }}</h6>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
